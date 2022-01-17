@@ -46,3 +46,7 @@ export const useDimension = () => {
         h, 
     }
 }
+
+const maxScale = (scale : number, i : number, n : number) : number => Math.max(0, scale - i / n)
+const divideScale = (scale : number, i : number, n : number) : number => Math.min(1 / n, divideScale(scale, i, n)) * n 
+const sinify = (scale : number) : number => Math.sin(scale * Math.PI)
