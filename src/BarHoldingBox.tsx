@@ -14,11 +14,11 @@ const BarHoldingBox = (props : BHBProps) => {
     return (
         <React.Fragment>
             <div style = {parentStyle()}>
-                <div style = {barStyle()}></div>
+                <div style = {barStyle()} onClick = {() => props.onClick()}></div>
                 {[0, 1].map(i => (<div key = {`box_${i}`} style = {boxStyle(i)}></div>))}
             </div>
         </React.Fragment>
     )
 }
 
-export default BarHoldingBox 
+export default withContext(BarHoldingBox)

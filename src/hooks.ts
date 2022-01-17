@@ -1,6 +1,6 @@
 import {useState, useEffect, CSSProperties} from 'react'
 
-const scGap : number = 0.02 
+const scGap : number = 0.01
 const delay : number = 20
 
 export const useAnimatedScale = () => {
@@ -67,7 +67,7 @@ export const useStyle = (w : number, h : number, scale : number) => {
     return {
         parentStyle() : CSSProperties {
             const left = `${midX}px`
-            const top = `${midY + (h / 2 - 2 * barHeight) * sf4}px`
+            const top = `${midY + (h / 2 - barHeight) * sf4}px`
             const transform = `rotate(${180 * sf3}deg)`
             return {
                 position,
@@ -93,8 +93,8 @@ export const useStyle = (w : number, h : number, scale : number) => {
         },
 
         boxStyle(i : number) : CSSProperties {
-            const top = `${-barHeight + (h / 2 - barHeight / 2 - barHeight) * sf1}px`
-            const left = `${-barWidth / 2 + (barWidth - barHeight) * (1 - sf2)}px`
+            const top = `${-barHeight - h / 2 + (h / 2 - barHeight / 2) * sf1}px`
+            const left = `${(-barWidth / 2 + (barWidth - barHeight) * i)  *  (1 - sf2) - barHeight * 0.5 * sf2}px`
             const width = `${barHeight}px`
             const height = `${barHeight}px`
             return {
