@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, CSSProperties} from 'react'
 
 const scGap : number = 0.02 
 const delay : number = 20
@@ -48,5 +48,63 @@ export const useDimension = () => {
 }
 
 const maxScale = (scale : number, i : number, n : number) : number => Math.max(0, scale - i / n)
-const divideScale = (scale : number, i : number, n : number) : number => Math.min(1 / n, divideScale(scale, i, n)) * n 
+const divideScale = (scale : number, i : number, n : number) : number => Math.min(1 / n, maxScale(scale, i, n)) * n 
 const sinify = (scale : number) : number => Math.sin(scale * Math.PI)
+
+
+export const useStyle = (w : number, h : number, scale : number) => {
+    const position = 'absolute'
+    const background = 'indigo'
+    const barWidth = Math.min(w, h) / 6
+    const barHeight = Math.min(w, h) / 15 
+    const midX = w / 2 
+    const midY = h / 2
+    const sf : number = sinify(scale)
+    const sf1 : number = divideScale(sf, 0, 4)
+    const sf2 : number = divideScale(sf, 1, 4)
+    const sf3 : number = divideScale(sf, 2, 4)
+    const sf4 : number = divideScale(sf, 3, 4)
+    return {
+        parentStyle() : CSSProperties {
+            const left = `${midX}px`
+            const top = `${midY + (h / 2 - 2 * barHeight) * sf4}px`
+            const transform = `rotate(${180 * sf3}deg)`
+            return {
+                position,
+                top, 
+                left,
+                transform
+            }
+        },
+
+        barStyle() : CSSProperties {
+            const left = `${-barWidth / 2}px`
+            const top = `${-barHeight / 2}px`
+            const width = `${barWidth}px`
+            const height = `${barHeight}px`
+            return {
+                position, 
+                left, 
+                top,
+                width, 
+                height, 
+                background
+            }
+        },
+
+        boxStyle(i : number) : CSSProperties {
+            const top = `${-barHeight + (h / 2 - barHeight / 2 - barHeight) * sf1}px`
+            const left = `${-barWidth / 2 + (barWidth - barHeight) * (1 - sf2)}px`
+            const width = `${barHeight}px`
+            const height = `${barHeight}px`
+            return {
+                position, 
+                left, 
+                top, 
+                width, 
+                height,
+                background  
+            }
+        }
+    }
+}
